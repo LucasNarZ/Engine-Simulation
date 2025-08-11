@@ -23,5 +23,6 @@ typedef struct Body {
 Body *createBody(float mass, float initialPosX, float initialPosY, float initialVelX, float initialVelY, float initialAccX, float initialAccY, float width, float height, float angle, int isStatic, Shape *shape);
 
 void updatePhysics(Body *body, float deltaTime, float gravity);
+void integratePositions(Body *body, float deltaTime);
 
 #endif

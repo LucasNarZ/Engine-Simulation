@@ -24,19 +24,15 @@ Body *createBody(float mass, float initialPosX, float initialPosY, float initial
 }
 
 void updatePhysics(Body *body, float deltaTime, float gravity){
-    body->accY += gravity;
+    body->accX = 0.0f;
+    body->accY = gravity;
     body->velX += body->accX * deltaTime;
     body->velY += body->accY * deltaTime;
-    if(!body->isStatic){
-        body->posX += body->velX * deltaTime;
-        body->posY += body->velY * deltaTime;
-    }
 
     body->angularAcc = body->torque / body->momentOfInertia;
 
     // Atualiza velocidade angular e ângulo
     body->angularVel += body->angularAcc * deltaTime;
-    body->angle += body->angularVel * deltaTime;
 
     if(body->posY <= -1 + body->height/2){
         body->posY = -1 + body->height/2;
@@ -59,4 +55,12 @@ void updatePhysics(Body *body, float deltaTime, float gravity){
     }
 
     body->torque = 0.0f;
+}
+
+void integratePositions(Body *body, float deltaTime){
+    if(!body->isStatic){
+        body->posX += body->velX * deltaTime;
+        body->posY += body->velY * deltaTime;
+    }
+    body->angle += body->angularVel * deltaTime;
 }
